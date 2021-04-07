@@ -2,7 +2,11 @@
   <div class="row">
     <div align="left"><h5>Universo Marvel</h5></div>
     <div>
-      <button class="btn btn-primary m-1" @click="previousPage" :disabled="!leftPage">
+      <button
+        class="btn btn-primary m-1"
+        @click="previousPage"
+        :disabled="!leftPage"
+      >
         Anterior
       </button>
       <button class="btn btn-primary m-1" @click="nextPage">Siguiente</button>
@@ -29,14 +33,13 @@ export default {
   data() {
     return {
       marvel: [],
-      responsedata:[],
+      responsedata: [],
     };
   },
   async mounted() {
     let response = await servicesdos.getCharacters(0);
     this.marvel = response.data.data.results;
     this.responsedata = response.data.data;
-   
   },
   methods: {
     imagepath(thumbnail) {
@@ -44,23 +47,33 @@ export default {
     },
     async previousPage() {
       if (this.leftPage) {
-        await this.getCharacters(this.responsedata.offset - this.responsedata.limit);
+        await this.getCharacters(
+          this.responsedata.offset - this.responsedata.limit
+        );
       }
     },
     async nextPage() {
       if (this.rightPage) {
-        await this.getCharacters(this.responsedata.offset + this.responsedata.limit);
+        await this.getCharacters(
+          this.responsedata.offset + this.responsedata.limit
+        );
       }
     },
-   
+    async getCharacters(offset) {
+      let response = await servicesdos.getCharacters(offset);
+      this.responsedata = response.data.data;
+      this.marvel = response.data.data.results;
+    },
   },
+
   computed: {
     leftPage() {
-      return this.responsedata.Offset > 0;
+      return this.responsedata.offset > 0;
     },
     rightPage() {
       return (
-        this.responsedata.offset + this.responsedata.limit < this.responsedata.total
+        this.responsedata.offset + this.responsedata.limit <
+        this.responsedata.total
       );
     },
   },

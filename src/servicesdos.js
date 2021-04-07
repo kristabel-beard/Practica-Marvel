@@ -4,8 +4,8 @@ import api from "./marvel-api"
 
 
 export default {
-    getCharacters() {
-        return api.get('/characters');
+    getCharacters(offset) {
+        return api.get('/characters?offset=' + offset);
 
     },
     getComics() {

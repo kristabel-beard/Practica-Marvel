@@ -6,6 +6,7 @@
       <div>{{auth.token}}</div>
     </div>
   </div>
+  
 </template>
 
 <script>
